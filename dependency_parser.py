@@ -1,6 +1,7 @@
 from dataParser import *
 from basic_features.unigrams import *
 from basic_features.bigrams import *
+import perceptron as pr
 
 
 def main():
@@ -23,6 +24,10 @@ def main():
 
     fv.generate_features(corpus)
     # fv.fgArr[0].filter_features(5)
+
+    trainer = pr.Perceptron()
+
+    trainer.train(corpus, fv, 2)
 
 
 

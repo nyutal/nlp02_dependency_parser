@@ -29,3 +29,6 @@ class Sentence(object):
     def get_sentence(self):
         return ' '.join(list(map(lambda x: x.token, self.words[1:])))
 
+
+
+

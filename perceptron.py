@@ -1,3 +1,24 @@
+import numpy as np
+from basic_features.feature import *
+
+class Perceptron(object):
+
+    def __init__(self):
+        pass
+
+    def train(self, corpus: Corpus, fv: FeatureVec, niter: int):
+        weights = np.ones(fv.get_size())
+        for i in range(niter):
+            for s in corpus.get_sentences()[0:1]:
+                g = {}
+                for head in range(s.get_list_size()):
+                    g[head] = {}
+                    for counter in range(1, s.get_list_size()):
+                        g[head][counter] = fv.get_weight_for_edge(s, head, counter, weights)
+                print(g)
+
+
+
 
 
 class Trainer(object):
