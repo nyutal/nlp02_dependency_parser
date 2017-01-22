@@ -1,5 +1,6 @@
 from sentence import *
 from corpus import *
+import numpy as np
 
 
 class FeatureGenerator(object):
@@ -77,6 +78,22 @@ class FeatureVec(object):
             if k != -1:
                 res += weights[k]
         return res
+
+    def get_features_for_edge(self, sentence, head, counter):
+        res = np.zeros(self.get_size())
+        for fg in self.fgArr:
+            k = fg.get_feature_idx(sentence, head, counter)
+            if k != -1:
+                res[k] += 1.
+        return res
+
+    def get_features_for_graph(self, sentence, g):
+        res = np.zeros(self.get_size())
+        for h in g:
+            for m in g[h].keys():
+                res = res + self.get_features_for_edge(sentence, h, m)
+        return res
+
 
     def generate_features(self, corpus=None):
         if corpus is not None:

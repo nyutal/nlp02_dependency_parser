@@ -23,16 +23,44 @@ class Perceptron(object):
                         g[head][counter] = fv.get_weight_for_edge(s, head, counter, weights)
                 # g = ed._reverse(g)
                 y_mst = ed.mst(0,g)
+                y_mst_f = fv.get_features_for_graph(s, y_mst)
 
                 # get y
                 y = s.get_graph()
-                print(y)
-                for h in y:
-                    for m in y[h].keys():
-                        y[h][m] = fv.get_weight_for_edge(s, h, m, weights)
+                y_f = fv.get_features_for_graph(s, y)
+                # for h in y:
+                #     for m in y[h].keys():
+                #         y[h][m] = fv.get_weight_for_edge(s, h, m, weights)
+
+                if (self.compare_graphs(y, y_mst)):
+                    # print('equal graphs')
+                    # print(y)
+                    # print(y_mst)
+                    continue
+
+                weights = weights + y_f - y_mst_f
+                print(weights)
 
                 n_sen += 1
-                if n_sen % 1000 == 0: print('perceptron processed ', n_sen, 'sentences')
+                if n_sen % 1000 == 0:
+                    print('perceptron processed ', n_sen, 'sentences')
+
+
+    def compare_graphs(self, y, y_mst):
+        for h in y_mst:
+            if h not in y:
+                return False
+                if len(y_mst[h].keys()) != len(y[h].keys()):
+                    return False
+                for m in y_mst[h].keys():
+                    if m not in y[h]:
+                        return False
+        return True
+
+
+
+
+
 
 
 

@@ -27,7 +27,7 @@ def main():
 
     trainer = pr.Perceptron()
 
-    trainer.train(corpus, fv, 2)
+    trainer.train(corpus, fv, 30)
 
 
 
