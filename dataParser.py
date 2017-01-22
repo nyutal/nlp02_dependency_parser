@@ -1,4 +1,5 @@
 from sentence import *
+from corpus import *
 
 
 class DataParser(object):
@@ -6,29 +7,31 @@ class DataParser(object):
     def __init__(self):
         pass
 
-    def parse(self, inFile):
+    def parse(self, in_file):
         newSententence = True
         sentences = []
         sentence = Sentence()
-        with open(inFile) as f:
+        with open(in_file) as f:
             for line in f:
                 if not line.strip():
-                    if sentence.get_length() > 0:
+                    if sentence.get_sentence_length() > 0:
                         sentences.append(sentence)
-                        print(sentence.getSentence())
+                        # print(sentence.getSentence())
                     else:
                         print('drop empty sentence')
+                        exiit(-1)
                     sentence = Sentence()
                     continue
                 tabs = line.split('\t')
-                sentence.append(Word(tabs[0], tabs[1], tabs[3], tabs[6]))
-
+                sentence.append(Word(int(tabs[0]), tabs[1], tabs[3], int(tabs[6])))
+        corpus = Corpus(sentences, in_file)
+        return corpus
 
 
 
 
 if __name__ == '__main__':
+    pass
 
-    dp = DataParser()
-    dp.parse('HW2-files/train.labeled')
+
 
