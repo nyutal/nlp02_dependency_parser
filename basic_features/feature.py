@@ -15,7 +15,7 @@ class FeatureGenerator(object):
         if not valid: return
         if h in self.hash2FeatureIdx:
             self.hash2Count[h] += 1
-            print('already exists hash:', h, ' with count: ', self.hash2Count[h])
+            # print('already exists hash:', h, ' with count: ', self.hash2Count[h])
         else:
             f_idx = self.parent_fv.add_feature(self)
             # print('adding feature ' + t + ' ' + words[i] + ' at index ' + str(featureVec.featureVecSize))
