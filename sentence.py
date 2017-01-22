@@ -29,6 +29,15 @@ class Sentence(object):
     def get_sentence(self):
         return ' '.join(list(map(lambda x: x.token, self.words[1:])))
 
+    def get_graph(self):
+        g = {}
+        for i in range(1, self.get_list_size()):
+            if self.words[i].head not in g:
+                g[self.words[i].head] = { i : 0.0 }
+            else:
+                g[self.words[i].head][i] = 0.0
+        return g
+
 
 
 

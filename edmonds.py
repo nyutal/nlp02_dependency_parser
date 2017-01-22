@@ -1,34 +1,11 @@
-import sys
-# --------------------------------------------------------------------------------- #
 
-def _input(filename):
-    prices = {}
-    names = {}
-
-    for line in file(filename).readlines():
-        (name, src, dst, price) = line.rstrip().split()
-        name = int(name.replace('M', ''))
-        src = int(src.replace('C', ''))
-        dst = int(dst.replace('C', ''))
-        price = int(price)
-        t = (src, dst)
-        if t in prices and prices[t] <= price:
-            continue
-        prices[t] = price
-        names[t] = name
-
-    return prices, names
-
-
-def _load(arcs, weights):
-    g = {}
-    for (src, dst) in arcs:
-        if src in g:
-            g[src][dst] = weights[(src, dst)]
-        else:
-            g[src] = {dst: weights[(src, dst)]}
-    return g
-
+def _negate(graph):
+    r = {}
+    for src in graph:
+        r[src] = {}
+        for (dst, c) in graph[src].items():
+            r[src][dst] = -c
+    return r
 
 def _reverse(graph):
     r = {}
@@ -55,7 +32,7 @@ def _getCycle(n, g, visited=set(), cycle=[]):
 def _mergeCycles(cycle, G, RG, g, rg):
     allInEdges = []
     minInternal = None
-    minInternalWeight = sys.maxint
+    minInternalWeight = float("inf")
 
     # find minimal internal edge weight
     for n in cycle:
@@ -138,6 +115,7 @@ def mst(root, G):
     and a call to G[v] loads the web page and finds its links.
     """
 
+    G = _negate(G)
     RG = _reverse(G)
     if root in RG:
         RG[root] = {}
@@ -145,7 +123,7 @@ def mst(root, G):
     for n in RG:
         if len(RG[n]) == 0:
             continue
-        minimum = sys.maxint
+        minimum = float("inf")
         s, d = None, None
         for e in RG[n]:
             if RG[n][e] < minimum:
@@ -169,23 +147,14 @@ def mst(root, G):
             continue
         _mergeCycles(cycle, G, RG, g, rg)
 
-    return g
+    return _negate(g)
 
 # --------------------------------------------------------------------------------- #
-
-if __name__ == "__main__":
-    try:
-        filename = sys.argv[1]
-        root = sys.argv[2]
-    except IndexError:
-        sys.stderr.write('no input and/or root node specified\n')
-        sys.stderr.write('usage: python edmonds.py <file> <root>\n')
-        sys.exit(1)
-
-    prices, names = _input(filename)
-    g = _load(prices, prices)
-    h = mst(int(root), g)
-    for s in h:
-        for t in h[s]:
-            print
-            "%d-%d" % (s, t)
+#
+# if __name__ == "__main__":
+#
+#     h = mst(int(root), g)
+#     for s in h:
+#         for t in h[s]:
+#             print
+#             "%d-%d" % (s, t)
