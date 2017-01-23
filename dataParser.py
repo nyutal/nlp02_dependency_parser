@@ -7,20 +7,26 @@ class DataParser(object):
     def __init__(self):
         pass
 
-    def parse(self, in_file):
+    def parse(self, in_file, max_samples=0):
         newSententence = True
         sentences = []
-        sentence = Sentence()
+        sid = 0
+        sentence = Sentence(sid)
         with open(in_file) as f:
             for line in f:
                 if not line.strip():
                     if sentence.get_sentence_length() > 0:
                         sentences.append(sentence)
                         # print(sentence.getSentence())
+
                     else:
                         print('drop empty sentence')
-                        exiit(-1)
-                    sentence = Sentence()
+                        exit(-1)
+                    sid += 1
+                    if(sid == max_samples):
+                        print('quit after max_samples:', max_samples)
+                        break
+                    sentence = Sentence(sid)
                     continue
                 tabs = line.split('\t')
                 sentence.append(Word(int(tabs[0]), tabs[1], tabs[3], int(tabs[6])))

@@ -2,11 +2,13 @@ from dataParser import *
 from basic_features.unigrams import *
 from basic_features.bigrams import *
 import perceptron as pr
+from conf import Conf
 
 
 def main():
     dp = DataParser()
-    corpus = dp.parse('HW2-files/train.labeled')
+    train_corpus = dp.parse(Conf.train_file_name, Conf.train_max_samples)
+
     fv = FeatureVec()
     fv.add_feature_gen(F1())
     fv.add_feature_gen(F2())
@@ -22,12 +24,17 @@ def main():
     fv.add_feature_gen(F12())
     fv.add_feature_gen(F13())
 
-    fv.generate_features(corpus)
+    fv.generate_features(train_corpus)
     # fv.fgArr[0].filter_features(5)
 
     trainer = pr.Perceptron()
 
-    trainer.train(corpus, fv, 30)
+    weights = trainer.train(train_corpus, fv, Conf.train_niter)
+
+    test_corpus = dp.parse(Conf.test_file_name, Conf.test_max_samples)
+
+    trainer.test(test_corpus, fv, weights)
+
 
 
 
