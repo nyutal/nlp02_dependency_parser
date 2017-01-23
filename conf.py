@@ -1,12 +1,12 @@
 import time
 
 class Conf(object):
-    test_name='train_result'
+    test_name='basic_train_20'
     train_file_name = 'HW2-files/train.labeled'
-    train_max_samples = 100 # less than 1 to represent full samples
-    train_niter = 10
-    test_file_name = 'HW2-files/train.labeled'
-    test_max_samples = 10 # less than 1 to represent full samples
+    train_max_samples = 0 # less than 1 to represent full samples
+    train_niter = 20
+    test_file_name = 'HW2-files/test.labeled'
+    test_max_samples = 0 # less than 1 to represent full samples
 
     output_file_name = 'output_' + test_name + '_' + time.strftime("%Y%m%d_%H%M%S") + '.txt'
     output_weight_file_name = output_file_name[:-4] + '_weights.txt'

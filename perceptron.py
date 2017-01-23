@@ -25,27 +25,19 @@ class Perceptron(object):
                 y = s.get_graph()
                 y_f = fv.get_features_for_graph(s, y)
 
-
                 if (self.compare_graphs(y, y_mst)):
-                    # print('equal graphs')
-                    # print(y)
-                    # print(y_mst)
                     if not 0 in y_mst:
-                        print(y)
-                        print(g)
-                        print(self.compare_graphs(y, y_mst))
                         raise AssertionError(y_mst)
-                    continue
-
-
-                weights = weights + y_f - y_mst_f
-                # print(weights)
-                mistakes += 1.0
+                else:
+                    weights = weights + y_f - y_mst_f
+                    mistakes += 1.0
 
                 n_sen += 1
                 if n_sen % 1000 == 0:
                     print('perceptron processed ', n_sen, 'sentences')
-            print('perceptron iteration ', i, 'finished with', str(mistakes/n_sen) + '% difference graphs mistakes')
+                    # print(weights)
+
+            print('perceptron iteration ', i, 'finished with',mistakes, ' mst mistakes from ', n_sen, 'senteneces')
         return weights
 
     def build_clique_graph(self, s, fv, weights):
