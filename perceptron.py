@@ -2,6 +2,7 @@ import numpy as np
 import time
 from basic_features.feature import *
 import edmonds as ed
+from conf import Conf
 
 class Perceptron(object):
 
@@ -38,6 +39,13 @@ class Perceptron(object):
                     # print(weights)
 
             print('perceptron iteration ', i, 'finished with',mistakes, ' mst mistakes from ', n_sen, 'senteneces')
+            if ( i + 1 ) % 10 == 0:
+                weight_file_name = Conf.output_weight_file_name[:-4] + '_' + str(i + 1) + '_iterations.txt'
+                weight_file = open(weight_file_name, 'w')
+                for i in weights:
+                    weight_file.write("%s\n" % i)
+                weight_file.close()
+
         return weights
 
     def build_clique_graph(self, s, fv, weights):

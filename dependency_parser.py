@@ -6,6 +6,14 @@ from conf import Conf
 import time
 
 
+def train(fv: FeatureVec, trainer: pr.Perceptron, train_corpus: Corpus, out_file):
+    out_file.write('start training at ' + time.asctime())
+    weights = trainer.train(train_corpus, fv, Conf.train_niter)
+    out_file.write('finish training at ' + time.asctime())
+    return weights
+
+
+
 def main():
 
     out_file = open(Conf.output_file_name, 'w')
@@ -32,15 +40,13 @@ def main():
     fv.generate_features(train_corpus)
     # fv.fgArr[0].filter_features(5)
 
-
-    ##### training #######
-    out_file.write('start training at ' + time.asctime())
-
     trainer = pr.Perceptron()
-    weights = trainer.train(train_corpus, fv, Conf.train_niter)
 
-    out_file.write('finish training at ' + time.asctime())
-    ####################
+    weights = None
+    if Conf.weights_src is None:
+        weights = train(fv, trainer, train_corpus, out_file)
+    else:
+        weights = np.asarray(list(map(float, [line.strip() for line in open(Conf.weights_src)])))
 
     test_corpus = dp.parse(Conf.test_file_name, Conf.test_max_samples)
 
@@ -58,11 +64,13 @@ def main():
     out_file.write(Conf.get_conf_str() + "\n")
     out_file.write(str(fv.get_feature_gen_count()) + "\n")
 
-    out_weight_file.write(str(weights.tostring()))
+    for i in weights:
+        out_weight_file.write("%s\n" % i)
+    # out_weight_file.writelines(weights.tostring())
     out_file.write('accuracy=' + str(accuracy) + "\n")
 
-
-
+    out_file.close()
+    out_weight_file.close()
 
 
 if __name__ == '__main__':
