@@ -33,7 +33,16 @@ def main():
 
     test_corpus = dp.parse(Conf.test_file_name, Conf.test_max_samples)
 
-    trainer.test(test_corpus, fv, weights)
+    accuracy = trainer.test(test_corpus, fv, weights)
+
+    out_file = open(Conf.output_file_name, 'w')
+    out_weight_file = open(Conf.output_weight_file_name, 'w')
+    out_file.write(Conf.get_conf_str() + "\n")
+    out_file.write(str(fv.get_feature_gen_count()) + "\n")
+
+    out_weight_file.write(str(weights.tostring()))
+    out_file.write('accuracy=' + str(accuracy) + "\n")
+
 
 
 

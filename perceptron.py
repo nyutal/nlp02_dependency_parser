@@ -80,9 +80,10 @@ class Perceptron(object):
                 nwords += 1.0
                 if w.head in y_mst and w.counter in y_mst[w.head]:
                     ncorrect += 1.0
-                else:
-                    print('error: (h,m)=(', w.head, w.counter, '), predicted graph:', y_mst)
+                # else:
+                #     print('error: (h,m)=(', w.head, w.counter, '), predicted graph:', y_mst)
         print('test: words=', str(nwords), ', correct words=', str(ncorrect), ', precision=', str(ncorrect/nwords*100) + '%')
+        return ncorrect/nwords
 
 
 
