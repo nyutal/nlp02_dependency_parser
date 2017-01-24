@@ -4,12 +4,12 @@ import numpy as np
 
 
 class FeatureGenerator(object):
-    def __init__(self, parent_fv=None):
+    def __init__(self, filt=0):
         self.hash2FeatureIdx = {}
         self.hash2Count = {}
         self.featureIdx2hash = {}
-        self.parent_fv = parent_fv
-        self.filter = None
+        self.parent_fv = None
+        self.filter = filt
 
     def add_feature(self, sentence: Sentence, head: int, counter: int):
         h, valid = self.get_hash_valid(sentence, head, counter)
@@ -31,11 +31,10 @@ class FeatureGenerator(object):
     def set_fv(self, fv):
         self.parent_fv = fv
 
-    def filter_features(self, num):
-        self.filter = num
+    def filter_features(self):
         del_list = []
         for h in self.hash2FeatureIdx.keys():
-            if self.hash2Count[h] < num:
+            if self.hash2Count[h] < self.filter:
                 del_list.append(h)
         for h in del_list:
             # print(self.__class__.__name__ + ' delete ' + str(h) + ' due less counts (' + str(self.hash2Count[h]) + ') than ' + str(num))
@@ -68,6 +67,12 @@ class FeatureVec(object):
     def get_size(self):
         return self.featureVecSize + 1
 
+    def get_size_sub_filtered(self):
+        ret = 0
+        for fg in self.fgArr:
+            ret += len(fg.hash2FeatureIdx)
+        return ret
+
     def set_weights(self, w):
         self.weights = w
 
@@ -91,7 +96,7 @@ class FeatureVec(object):
         res = np.zeros(self.get_size())
         for h in g:
             for m in g[h].keys():
-                res = res + self.get_features_for_edge(sentence, h, m)
+                res += self.get_features_for_edge(sentence, h, m)
         return res
 
 
@@ -102,7 +107,11 @@ class FeatureVec(object):
             for i in range(1, s.get_list_size()):
                 for fg in self.fgArr:
                     fg.add_feature(s, s.words[i].head, i)
-        print('fv contains ', self.get_size(), ' features')
+        print('fv contains ', self.get_size(), ' features before filtering')
+        print(self.get_feature_gen_count())
+        for fg in self.fgArr:
+            fg.filter_features()
+        print('fv contains ', self.get_size_sub_filtered(), ' features after filtering')
         print(self.get_feature_gen_count())
 
     def add_feature(self, feature_gen):
@@ -114,12 +123,12 @@ class FeatureVec(object):
     def get_feature_gen_string(self):
         s = ''
         for fg in self.fgArr:
-            s += ' ' + fg.__class__.__name__
+            s += ' ' + fg.__class__.__name__ + '_filter_' + str(fg.filter)
         return s
 
     def get_feature_gen_count(self):
         d = {}
         for fg in self.fgArr:
-            d[fg.__class__.__name__] = len(fg.hash2FeatureIdx)
+            d[fg.__class__.__name__] = (len(fg.hash2FeatureIdx), 'filter=' + str(fg.filter))
         return d
 

@@ -1,0 +1,3 @@
+{'train_max_samples': 0, 'train_niter': 100, 'weight_src': None, 'test_max_samples': 0, 'train_file_name': 'HW2-files/train.labeled', 'test_file_name': None}
+{'F13': 749, 'F3': 37, 'F12': 69819, 'F11': 70679, 'F10': 33936, 'F8': 31314, 'F1': 9993, 'F2': 8876, 'F4': 15908, 'F5': 14162, 'F9': 70401, 'F7': 71232, 'F6': 45}
+start training at Mon Jan 23 15:05:37 2017finish training at Mon Jan 23 21:14:14 2017

@@ -40,7 +40,7 @@ class Sentence(object):
             if self.words[i].head not in g:
                 g[self.words[i].head] = { self.words[i].counter: 0.0}
             else:
-                g[self.words[i].head][i] = 0.0
+                g[self.words[i].head][self.words[i].counter] = 0.0
         return g
 
 

@@ -1,8 +1,10 @@
-import numpy as np
 import time
-from basic_features.feature import *
+from  basic_features.feature import *
+import numpy as np
+from corpus import Corpus
 import edmonds as ed
 from conf import Conf
+
 
 class Perceptron(object):
 
@@ -10,8 +12,8 @@ class Perceptron(object):
         pass
 
     def train(self, corpus: Corpus, fv: FeatureVec, niter: int):
-        weights = np.ones(fv.get_size())
-        for i in range(niter):
+        weights = np.zeros(fv.get_size())
+        for i in range(1, niter+1):
             mistakes = 0.
             print('perceptron iteration ', i, time.asctime())
             n_sen = 0
@@ -39,8 +41,8 @@ class Perceptron(object):
                     # print(weights)
 
             print('perceptron iteration ', i, 'finished with',mistakes, ' mst mistakes from ', n_sen, 'senteneces')
-            if ( i + 1 ) % 10 == 0:
-                weight_file_name = Conf.output_weight_file_name[:-4] + '_' + str(i + 1) + '_iterations.txt'
+            if i % 10 == 0:
+                weight_file_name = Conf.output_weight_file_name[:-4] + '_' + str(i) + '_iterations.txt'
                 weight_file = open(weight_file_name, 'w')
                 for i in weights:
                     weight_file.write("%s\n" % i)
