@@ -5,9 +5,9 @@ class Conf(object):
     train_file_name = 'HW2-files/train.labeled'
     train_max_samples = 0 # less than 1 to represent full samples
     train_niter = 100
-    test_file_name = None #'HW2-files/test.labeled'
+    test_file_name = 'HW2-files/test.labeled'
     test_max_samples = 0 # less than 1 to represent full samples
-    weights_src = None #'/Users/nyutal/dev/nlp02_dependency_parser/results/basic_train_with_filters/output_basic_train_filtered_20170124_115733_weights_100_iterations.txt'
+    weights_src = '/Users/nyutal/dev/nlp02_dependency_parser/results/complex_first/output_basic_train_filtered_20170124_183425_weights_90_iterations.txt'
 
     output_file_name = 'output_' + test_name + '_' + time.strftime("%Y%m%d_%H%M%S") + '.txt'
     output_weight_file_name = output_file_name[:-4] + '_weights.txt'
