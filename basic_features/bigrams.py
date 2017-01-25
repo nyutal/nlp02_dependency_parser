@@ -56,11 +56,11 @@ class F13(FeatureGenerator):
 
 
 def add_bigrams(fv: FeatureVec):
-    fv.add_feature_gen(F7())
-    fv.add_feature_gen(F8())
-    fv.add_feature_gen(F9())
-    fv.add_feature_gen(F10())
-    fv.add_feature_gen(F11())
-    fv.add_feature_gen(F12())
-    fv.add_feature_gen(F13())
+    fv.add_feature_gen(F7(Conf.filter))
+    fv.add_feature_gen(F8(Conf.filter))
+    fv.add_feature_gen(F9(Conf.filter))
+    fv.add_feature_gen(F10(Conf.filter))
+    fv.add_feature_gen(F11(Conf.filter))
+    fv.add_feature_gen(F12(Conf.filter))
+    fv.add_feature_gen(F13(Conf.filter))
 

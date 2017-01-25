@@ -40,9 +40,9 @@ class F6(FeatureGenerator):
 
 
 def add_unigrams(fv: FeatureVec):
-    fv.add_feature_gen(F1())
-    fv.add_feature_gen(F2())
-    fv.add_feature_gen(F3())
-    fv.add_feature_gen(F4())
-    fv.add_feature_gen(F5())
-    fv.add_feature_gen(F6())
+    fv.add_feature_gen(F1(Conf.filter))
+    fv.add_feature_gen(F2(Conf.filter))
+    fv.add_feature_gen(F3(Conf.filter))
+    fv.add_feature_gen(F4(Conf.filter))
+    fv.add_feature_gen(F5(Conf.filter))
+    fv.add_feature_gen(F6(Conf.filter))
