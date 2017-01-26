@@ -4,6 +4,7 @@ from basic_features.bigrams import *
 from basic_features.complex import *
 from conf import Conf
 from dataParser import *
+import edmonds as ed
 
 def main():
 
@@ -26,34 +27,32 @@ def main():
     weights = np.asarray(list(map(float, [line.strip() for line in open(Conf.weights_src_comp)])))
     for i in weights:
         out_weight_file.write("%s\n" % i)
-        # out_weight_file.writelines(weights.tostring())
 
-    if Conf.test_file_name is not None:
-        test_corpus = dp.parse(Conf.comp_file_name, Conf.comp_max_samples)
-        out_file.write('start testing at ' + time.asctime())
-        test(test_corpus, fv, weights)
-        out_file.write('finish testing at ' + time.asctime())
-
+    comp_corpus = dp.parse_comp(Conf.comp_file_name, Conf.comp_max_samples)
+    out_file.write('start testing at ' + time.asctime())
+    comp(comp_corpus, fv, weights, out_file)
+    out_file.write('finish testing at ' + time.asctime())
     out_file.close()
     out_weight_file.close()
 
 
-def test(self, corpus: Corpus, fv: FeatureVec, weights):
-    nwords = 0.
-    ncorrect = 0.
+def comp(corpus: Corpus, fv: FeatureVec, weights, out_file):
     for s in corpus.get_sentences():
-        g = self.build_clique_graph(s, fv, weights)
+        g = build_clique_graph(s, fv, weights)
         y_mst = ed.mst(0, g)
+        out_file.write(str(y_mst))
         for w in s.words[1:]:
-            nwords += 1.0
-            if w.head in y_mst and w.counter in y_mst[w.head]:
-                ncorrect += 1.0
-                # else:
-                #     print('error: (h,m)=(', w.head, w.counter, '), predicted graph:', y_mst)
-    print('test: words=', str(nwords), ', correct words=', str(ncorrect), ', precision=',
-          str(ncorrect / nwords * 100) + '%')
-    return ncorrect / nwords
+            pass # TODO: if w.head in y_mst and w.counter in y_mst[w.head]:
 
+
+
+def build_clique_graph(s, fv, weights):
+    g = {}
+    for head in range(s.get_list_size()):
+        g[head] = {}
+        for counter in range(1, s.get_list_size()):
+            g[head][counter] = fv.get_weight_for_edge(s, head, counter, weights)
+    return g
 
 if __name__ == '__main__':
     main()
