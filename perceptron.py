@@ -41,7 +41,7 @@ class Perceptron(object):
                     # print(weights)
 
             print('perceptron iteration ', i, 'finished with',mistakes, ' mst mistakes from ', n_sen, 'senteneces')
-            if i % 10 == 0:
+            if i % Conf.print_on_each_niter == 0:
                 weight_file_name = Conf.output_weight_file_name[:-4] + '_' + str(i) + '_iterations.txt'
                 weight_file = open(weight_file_name, 'w')
                 for i in weights:
@@ -65,11 +65,11 @@ class Perceptron(object):
         for h in y_mst:
             if h not in y:
                 return False
-                if len(y_mst[h].keys()) != len(y[h].keys()):
+            if len(y_mst[h].keys()) != len(y[h].keys()):
+                return False
+            for m in y_mst[h].keys():
+                if m not in y[h]:
                     return False
-                for m in y_mst[h].keys():
-                    if m not in y[h]:
-                        return False
         return True
 
     def test(self, corpus: Corpus, fv: FeatureVec, weights):
