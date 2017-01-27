@@ -58,7 +58,6 @@ class Perceptron(object):
                 g[head][counter] = fv.get_weight_for_edge(s, head, counter, weights)
         return g
 
-
     def compare_graphs(self, y, y_mst):
         if len(y_mst.keys()) != len(y.keys()):
             return False
@@ -69,7 +68,7 @@ class Perceptron(object):
                 return False
             for m in y_mst[h].keys():
                 if m not in y[h]:
-                     return False
+                    return False
         return True
 
     def test(self, corpus: Corpus, fv: FeatureVec, weights):
