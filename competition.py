@@ -9,6 +9,7 @@ import edmonds as ed
 def main():
 
     out_file = open(Conf.output_file_name, 'w')
+    comp_out_file = open(Conf.comp_output_file_name, 'w')
     out_weight_file = open(Conf.output_weight_file_name, 'w')
 
     dp = DataParser()
@@ -30,7 +31,7 @@ def main():
 
     comp_corpus = dp.parse_comp(Conf.comp_file_name, Conf.comp_max_samples)
     out_file.write('start testing at ' + time.asctime())
-    comp(comp_corpus, fv, weights, out_file)
+    comp(comp_corpus, fv, weights, comp_out_file)
     out_file.write('finish testing at ' + time.asctime())
     out_file.close()
     out_weight_file.close()
@@ -40,9 +41,12 @@ def comp(corpus: Corpus, fv: FeatureVec, weights, out_file):
     for s in corpus.get_sentences():
         g = build_clique_graph(s, fv, weights)
         y_mst = ed.mst(0, g)
-        out_file.write(str(y_mst))
-        for w in s.words[1:]:
-            pass # TODO: if w.head in y_mst and w.counter in y_mst[w.head]:
+        for k,v in y_mst.items():
+            for c,_ in v.items():
+                s.words[c].head = k
+        for k in s.words[1:]:
+            out_file.write(str(k.counter) + '\t' + str(k.token) + '\t' + '_' + '\t' + str(k.pos) + '\t' + '_' + '\t' + '_' + '\t' + str(k.head) + '\t' + '_' + '\t' + '_' + '\t' + '_' + '\n') #tabs[0], tabs[1], tabs[3], tabs[6]
+        out_file.write('\n')
 
 
 

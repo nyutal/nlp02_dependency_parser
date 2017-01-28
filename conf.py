@@ -13,6 +13,7 @@ class Conf(object):
     weights_src_comp = 'results/complex_first/output_basic_train_filtered_20170124_183425_weights_60_iterations.txt'
     comp_file_name = 'HW2-files/comp.unlabeled'
     comp_max_samples = 5 # 0 = all samples
+    comp_output_file_name = 'results/comp_out' + test_name + '_' + time.strftime("%Y%m%d_%H%M%S") + '.txt'
 
     output_file_name = 'results/output_' + test_name + '_' + time.strftime("%Y%m%d_%H%M%S") + '.txt'
     output_weight_file_name = output_file_name[:-4] + '_weights.txt'
