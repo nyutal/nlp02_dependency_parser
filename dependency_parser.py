@@ -15,6 +15,19 @@ def train(fv: FeatureVec, trainer: pr.Perceptron, train_corpus: Corpus, out_file
     out_file.write('finish training at ' + time.asctime())
     return weights
 
+def comp(dp: DataParser, fv: FeatureVec, trainer: pr.Perceptron):
+    comp_corpus = dp.parse(Conf.comp_file_name, Conf.comp_max_samples, True)
+    weights = np.asarray(list(map(float, [line.strip() for line in open(Conf.weights_src_comp)])))
+    trainer.predict(comp_corpus, fv, weights)
+    comp_out_file = open(Conf.comp_output_file_name, 'w')
+    for s in comp_corpus.get_sentences():
+        for k in s.words[1:]:
+            comp_out_file.write(str(k.counter) + '\t' + str(k.token) + '\t' + '_' + '\t' + str(
+                k.pos) + '\t' + '_' + '\t' + '_' + '\t' + str(
+                k.head) + '\t' + '_' + '\t' + '_' + '\t' + '_' + '\n')  # tabs[0], tabs[1], tabs[3], tabs[6]
+        comp_out_file.write('\n')
+    comp_out_file.close()
+
 
 def test_from_train(dp: DataParser, fv: FeatureVec, trainer: pr.Perceptron, weights, out_file):
     if Conf.test_file_name is None: return
@@ -65,7 +78,6 @@ def test_from_path(dp: DataParser, fv: FeatureVec, trainer: pr.Perceptron, out_f
         out_file.write('accuracy=' + str(accuracy) + "\n")
 
 
-
 def main():
     out_file = open(Conf.output_file_name, 'w')
     dp = DataParser()
@@ -83,8 +95,9 @@ def main():
 
     trainer = pr.Perceptron()
 
-    # weights = None
-    if Conf.weights_src is None:
+    if Conf.is_competition:
+        comp(dp, fv, trainer)
+    elif Conf.weights_src is None:
         weights = train(fv, trainer, train_corpus, out_file)
         out_weight_file = open(Conf.output_weight_file_name, 'w')
         for i in weights:
@@ -92,15 +105,7 @@ def main():
             out_weight_file.close()
         test_from_train(dp, fv, trainer, weights, out_file)
     else:
-        # weights = np.asarray(list(map(float, [line.strip() for line in open(Conf.weights_src)])))
         test_from_path(dp, fv, trainer, out_file)
-
-    # if Conf.test_file_name is not None:
-    #     test_corpus = dp.parse(Conf.test_file_name, Conf.test_max_samples)
-    #     out_file.write('start testing at ' + time.asctime())
-    #     accuracy = trainer.test(test_corpus, fv, weights)
-    #     out_file.write('finish testing at ' + time.asctime())
-    #     out_file.write('accuracy=' + str(accuracy) + "\n")
 
     out_file.close()
 

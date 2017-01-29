@@ -89,7 +89,16 @@ class Perceptron(object):
         print('test: words=', str(nwords), ', correct words=', str(ncorrect), ', precision=', str(ncorrect/nwords*100) + '%')
         return ncorrect/nwords
 
-
+    def predict(self, corpus: Corpus, fv: FeatureVec, weights):
+        counter = 0
+        for s in corpus.get_sentences():
+            g = self.build_clique_graph(s, fv, weights)
+            y_mst = ed.mst(0, g)
+            for h in y_mst:
+                for m in y_mst[h].keys():
+                    s.words[m].head = h
+            counter +=1
+            if counter % 100 == 0: print('predicted ', counter, ' sentences', time.asctime())
 
 
 
