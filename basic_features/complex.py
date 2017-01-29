@@ -27,8 +27,8 @@ class FDirection(FeatureGenerator):
     def get_hash_valid(self, sentence, head, counter):
         # if Conf.weak_root and head == 0: return False, False
         if Conf.weak_root and head == 0: return False, False
-        if head < counter: return 'right', True
-        return 'left', True
+        direction = 'right' if head < counter else 'left'
+        return direction, True
 
 
 class FDist(FeatureGenerator):
@@ -238,7 +238,8 @@ class FInBetween1(FeatureGenerator):
         cpos = sentence.words[counter].pos
         hpos = sentence.words[head].pos
         mpos = sentence.words[counter - 1].pos if head < counter else sentence.words[counter + 1].pos
-        return (cpos, mpos, hpos), True
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos, hpos), True
 
 
 class FInBetween2(FeatureGenerator):
@@ -248,7 +249,8 @@ class FInBetween2(FeatureGenerator):
         cpos = sentence.words[counter].pos
         hpos = sentence.words[head].pos
         mpos = sentence.words[counter - 2].pos if head < counter else sentence.words[counter + 2].pos
-        return (cpos, mpos, hpos), True
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos, hpos), True
 
 
 class FInBetween3(FeatureGenerator):
@@ -258,7 +260,8 @@ class FInBetween3(FeatureGenerator):
         cpos = sentence.words[counter].pos
         hpos = sentence.words[head].pos
         mpos = sentence.words[counter - 3].pos if head < counter else sentence.words[counter + 3].pos
-        return (cpos, mpos, hpos), True
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos, hpos), True
 
 
 class FInBetween4(FeatureGenerator):
@@ -268,7 +271,8 @@ class FInBetween4(FeatureGenerator):
         cpos = sentence.words[counter].pos
         hpos = sentence.words[head].pos
         mpos = sentence.words[counter - 4].pos if head < counter else sentence.words[counter + 4].pos
-        return (cpos, mpos, hpos), True
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos, hpos), True
 
 
 class FInBetween5(FeatureGenerator):
@@ -278,7 +282,8 @@ class FInBetween5(FeatureGenerator):
         cpos = sentence.words[counter].pos
         hpos = sentence.words[head].pos
         mpos = sentence.words[counter - 5].pos if head < counter else sentence.words[counter + 5].pos
-        return (cpos, mpos, hpos), True
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos, hpos), True
 
 
 class FInBetween6(FeatureGenerator):
@@ -288,7 +293,8 @@ class FInBetween6(FeatureGenerator):
         cpos = sentence.words[counter].pos
         hpos = sentence.words[head].pos
         mpos = sentence.words[counter - 6].pos if head < counter else sentence.words[counter + 6].pos
-        return (cpos, mpos, hpos), True
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos, hpos), True
 
 
 class FInBetween7(FeatureGenerator):
@@ -298,7 +304,8 @@ class FInBetween7(FeatureGenerator):
         cpos = sentence.words[counter].pos
         hpos = sentence.words[head].pos
         mpos = sentence.words[counter - 7].pos if head < counter else sentence.words[counter + 7].pos
-        return (cpos, mpos, hpos), True
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos, hpos), True
 
 
 class FInBetween8(FeatureGenerator):
@@ -308,7 +315,8 @@ class FInBetween8(FeatureGenerator):
         cpos = sentence.words[counter].pos
         hpos = sentence.words[head].pos
         mpos = sentence.words[counter - 8].pos if head < counter else sentence.words[counter + 8].pos
-        return (cpos, mpos, hpos), True
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos, hpos), True
 
 
 class FInBetween9(FeatureGenerator):
@@ -318,7 +326,8 @@ class FInBetween9(FeatureGenerator):
         cpos = sentence.words[counter].pos
         hpos = sentence.words[head].pos
         mpos = sentence.words[counter - 9].pos if head < counter else sentence.words[counter + 9].pos
-        return (cpos, mpos, hpos), True
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos, hpos), True
 
 
 class FInBetween10(FeatureGenerator):
@@ -328,7 +337,8 @@ class FInBetween10(FeatureGenerator):
         cpos = sentence.words[counter].pos
         hpos = sentence.words[head].pos
         mpos = sentence.words[counter - 10].pos if head < counter else sentence.words[counter + 10].pos
-        return (cpos, mpos, hpos), True
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos, hpos), True
 
 
 class FInBetween11(FeatureGenerator):
@@ -338,7 +348,8 @@ class FInBetween11(FeatureGenerator):
         cpos = sentence.words[counter].pos
         hpos = sentence.words[head].pos
         mpos = sentence.words[counter - 11].pos if head < counter else sentence.words[counter + 11].pos
-        return (cpos, mpos, hpos), True
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos, hpos), True
 
 
 class FInBetween12(FeatureGenerator):
@@ -348,7 +359,8 @@ class FInBetween12(FeatureGenerator):
         cpos = sentence.words[counter].pos
         hpos = sentence.words[head].pos
         mpos = sentence.words[counter - 12].pos if head < counter else sentence.words[counter + 12].pos
-        return (cpos, mpos, hpos), True
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos, hpos), True
 
 
 class FInBetween13(FeatureGenerator):
@@ -358,7 +370,8 @@ class FInBetween13(FeatureGenerator):
         cpos = sentence.words[counter].pos
         hpos = sentence.words[head].pos
         mpos = sentence.words[counter - 13].pos if head < counter else sentence.words[counter + 13].pos
-        return (cpos, mpos, hpos), True
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos, hpos), True
 
 
 class FDigit1(FeatureGenerator):
@@ -503,6 +516,171 @@ class FSuffix3_2(FeatureGenerator):
         return (c.token[-3:], c.pos, h.pos), True
 
 
+class F7Direction(FeatureGenerator):
+    def get_hash_valid(self, sentence, head, counter):
+        if Conf.weak_root and head == 0: return False, False
+        c = sentence.words[counter]
+        p = sentence.words[head]
+        direction = 'right' if head < counter else 'left'
+        return (direction, p.token, p.pos, c.token, c.pos), True
+
+
+class F8Direction(FeatureGenerator):
+    def get_hash_valid(self, sentence, head, counter):
+        if Conf.weak_root and head == 0: return False, False
+        c = sentence.words[counter]
+        p = sentence.words[head]
+        direction = 'right' if head < counter else 'left'
+        return (direction, p.pos, c.token, c.pos), True
+
+
+class F9Direction(FeatureGenerator):
+    def get_hash_valid(self, sentence, head, counter):
+        c = sentence.words[counter]
+        p = sentence.words[head]
+        direction = 'right' if head < counter else 'left'
+        return (direction, p.token, c.token, c.pos), True
+
+
+class F10Direction(FeatureGenerator):
+    def get_hash_valid(self, sentence, head, counter):
+        if Conf.weak_root and head == 0: return False, False
+        c = sentence.words[counter]
+        p = sentence.words[head]
+        direction = 'right' if head < counter else 'left'
+        return (direction, p.token, p.pos, c.pos), True
+
+
+class F11Direction(FeatureGenerator):
+    def get_hash_valid(self, sentence, head, counter):
+        if Conf.weak_root and head == 0: return False, False
+        c = sentence.words[counter]
+        p = sentence.words[head]
+        direction = 'right' if head < counter else 'left'
+        return (direction, p.token, p.pos, c.token), True
+
+
+class F12Direction(FeatureGenerator):
+    def get_hash_valid(self, sentence, head, counter):
+        c = sentence.words[counter]
+        p = sentence.words[head]
+        direction = 'right' if head < counter else 'left'
+        return (direction, p.token, c.token), True
+
+
+class F13Direction(FeatureGenerator):
+    def get_hash_valid(self, sentence, head, counter):
+        if Conf.weak_root and head == 0: return False, False
+        c = sentence.words[counter]
+        p = sentence.words[head]
+        direction = 'right' if head < counter else 'left'
+        return (direction, p.pos, c.pos), True
+
+
+class FInBetweenAll2(FeatureGenerator):
+    def get_hash_valid(self, sentence, head, counter):
+        if Conf.weak_root and head == 0: return False, False
+        if (abs(head - counter) < 3): return False, False
+        cpos = sentence.words[counter].pos
+        hpos = sentence.words[head].pos
+        mpos1 = sentence.words[counter - 1].pos if head < counter else sentence.words[counter + 1].pos
+        mpos2 = sentence.words[counter - 2].pos if head < counter else sentence.words[counter + 2].pos
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos1, mpos2, hpos), True
+
+
+class FInBetweenAll3(FeatureGenerator):
+    def get_hash_valid(self, sentence, head, counter):
+        if Conf.weak_root and head == 0: return False, False
+        if (abs(head - counter) < 4): return False, False
+        cpos = sentence.words[counter].pos
+        hpos = sentence.words[head].pos
+        mpos1 = sentence.words[counter - 1].pos if head < counter else sentence.words[counter + 1].pos
+        mpos2 = sentence.words[counter - 2].pos if head < counter else sentence.words[counter + 2].pos
+        mpos3 = sentence.words[counter - 3].pos if head < counter else sentence.words[counter + 3].pos
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos1, mpos2, mpos3, hpos), True
+
+
+class FInBetweenAll4(FeatureGenerator):
+    def get_hash_valid(self, sentence, head, counter):
+        if Conf.weak_root and head == 0: return False, False
+        if (abs(head - counter) < 5): return False, False
+        cpos = sentence.words[counter].pos
+        hpos = sentence.words[head].pos
+        mpos1 = sentence.words[counter - 1].pos if head < counter else sentence.words[counter + 1].pos
+        mpos2 = sentence.words[counter - 2].pos if head < counter else sentence.words[counter + 2].pos
+        mpos3 = sentence.words[counter - 3].pos if head < counter else sentence.words[counter + 3].pos
+        mpos4 = sentence.words[counter - 4].pos if head < counter else sentence.words[counter + 4].pos
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos1, mpos2, mpos3, mpos4, hpos), True
+
+
+class FInBetweenAll5(FeatureGenerator):
+    def get_hash_valid(self, sentence, head, counter):
+        if Conf.weak_root and head == 0: return False, False
+        if (abs(head - counter) < 6): return False, False
+        cpos = sentence.words[counter].pos
+        hpos = sentence.words[head].pos
+        mpos1 = sentence.words[counter - 1].pos if head < counter else sentence.words[counter + 1].pos
+        mpos2 = sentence.words[counter - 2].pos if head < counter else sentence.words[counter + 2].pos
+        mpos3 = sentence.words[counter - 3].pos if head < counter else sentence.words[counter + 3].pos
+        mpos4 = sentence.words[counter - 4].pos if head < counter else sentence.words[counter + 4].pos
+        mpos5 = sentence.words[counter - 5].pos if head < counter else sentence.words[counter + 5].pos
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos1, mpos2, mpos3, mpos4, mpos5, hpos), True
+
+
+class FInBetweenAll6(FeatureGenerator):
+    def get_hash_valid(self, sentence, head, counter):
+        if Conf.weak_root and head == 0: return False, False
+        if (abs(head - counter) < 7): return False, False
+        cpos = sentence.words[counter].pos
+        hpos = sentence.words[head].pos
+        mpos1 = sentence.words[counter - 1].pos if head < counter else sentence.words[counter + 1].pos
+        mpos2 = sentence.words[counter - 2].pos if head < counter else sentence.words[counter + 2].pos
+        mpos3 = sentence.words[counter - 3].pos if head < counter else sentence.words[counter + 3].pos
+        mpos4 = sentence.words[counter - 4].pos if head < counter else sentence.words[counter + 4].pos
+        mpos5 = sentence.words[counter - 5].pos if head < counter else sentence.words[counter + 5].pos
+        mpos6 = sentence.words[counter - 6].pos if head < counter else sentence.words[counter + 6].pos
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos1, mpos2, mpos3, mpos4, mpos5, mpos6, hpos), True
+
+
+class FInBetweenAll7(FeatureGenerator):
+    def get_hash_valid(self, sentence, head, counter):
+        if Conf.weak_root and head == 0: return False, False
+        if (abs(head - counter) < 8): return False, False
+        cpos = sentence.words[counter].pos
+        hpos = sentence.words[head].pos
+        mpos1 = sentence.words[counter - 1].pos if head < counter else sentence.words[counter + 1].pos
+        mpos2 = sentence.words[counter - 2].pos if head < counter else sentence.words[counter + 2].pos
+        mpos3 = sentence.words[counter - 3].pos if head < counter else sentence.words[counter + 3].pos
+        mpos4 = sentence.words[counter - 4].pos if head < counter else sentence.words[counter + 4].pos
+        mpos5 = sentence.words[counter - 5].pos if head < counter else sentence.words[counter + 5].pos
+        mpos6 = sentence.words[counter - 6].pos if head < counter else sentence.words[counter + 6].pos
+        mpos7 = sentence.words[counter - 7].pos if head < counter else sentence.words[counter + 7].pos
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos1, mpos2, mpos3, mpos4, mpos5, mpos6, mpos7, hpos), True
+
+
+class FInBetweenAll8(FeatureGenerator):
+    def get_hash_valid(self, sentence, head, counter):
+        if Conf.weak_root and head == 0: return False, False
+        if (abs(head - counter) < 9): return False, False
+        cpos = sentence.words[counter].pos
+        hpos = sentence.words[head].pos
+        mpos1 = sentence.words[counter - 1].pos if head < counter else sentence.words[counter + 1].pos
+        mpos2 = sentence.words[counter - 2].pos if head < counter else sentence.words[counter + 2].pos
+        mpos3 = sentence.words[counter - 3].pos if head < counter else sentence.words[counter + 3].pos
+        mpos4 = sentence.words[counter - 4].pos if head < counter else sentence.words[counter + 4].pos
+        mpos5 = sentence.words[counter - 5].pos if head < counter else sentence.words[counter + 5].pos
+        mpos6 = sentence.words[counter - 6].pos if head < counter else sentence.words[counter + 6].pos
+        mpos7 = sentence.words[counter - 7].pos if head < counter else sentence.words[counter + 7].pos
+        mpos8 = sentence.words[counter - 8].pos if head < counter else sentence.words[counter + 8].pos
+        direction = 'right' if head < counter else 'left'
+        return (direction, cpos, mpos1, mpos2, mpos3, mpos4, mpos5, mpos6, mpos7, mpos8, hpos), True
+
 
 def add_complex(fv: FeatureVec):
     fv.add_feature_gen(FMissedBigrams1(Conf.filter))
@@ -544,19 +722,33 @@ def add_complex(fv: FeatureVec):
     fv.add_feature_gen(FInBetween11(Conf.filter))
     fv.add_feature_gen(FInBetween12(Conf.filter))
     fv.add_feature_gen(FInBetween13(Conf.filter))
-    fv.add_feature_gen(FDigit1(Conf.filter))
-    fv.add_feature_gen(FDigit2(Conf.filter))
-    fv.add_feature_gen(FCapital1(Conf.filter))
-    fv.add_feature_gen(FCapital2(Conf.filter))
-    fv.add_feature_gen(FPrefix1_1(Conf.filter))
-    fv.add_feature_gen(FPrefix1_2(Conf.filter))
-    fv.add_feature_gen(FPrefix2_1(Conf.filter))
-    fv.add_feature_gen(FPrefix2_2(Conf.filter))
-    fv.add_feature_gen(FPrefix3_1(Conf.filter))
-    fv.add_feature_gen(FPrefix3_2(Conf.filter))
-    fv.add_feature_gen(FSuffix1_1(Conf.filter))
-    fv.add_feature_gen(FSuffix1_2(Conf.filter))
-    fv.add_feature_gen(FSuffix2_1(Conf.filter))
-    fv.add_feature_gen(FSuffix2_2(Conf.filter))
-    fv.add_feature_gen(FSuffix3_1(Conf.filter))
-    fv.add_feature_gen(FSuffix3_2(Conf.filter))
+    # fv.add_feature_gen(FDigit1(Conf.filter))
+    # fv.add_feature_gen(FDigit2(Conf.filter))
+    # fv.add_feature_gen(FCapital1(Conf.filter))
+    # fv.add_feature_gen(FCapital2(Conf.filter))
+    # fv.add_feature_gen(FPrefix1_1(Conf.filter))
+    # fv.add_feature_gen(FPrefix1_2(Conf.filter))
+    # fv.add_feature_gen(FPrefix2_1(Conf.filter))
+    # fv.add_feature_gen(FPrefix2_2(Conf.filter))
+    # fv.add_feature_gen(FPrefix3_1(Conf.filter))
+    # fv.add_feature_gen(FPrefix3_2(Conf.filter))
+    # fv.add_feature_gen(FSuffix1_1(Conf.filter))
+    # fv.add_feature_gen(FSuffix1_2(Conf.filter))
+    # fv.add_feature_gen(FSuffix2_1(Conf.filter))
+    # fv.add_feature_gen(FSuffix2_2(Conf.filter))
+    # fv.add_feature_gen(FSuffix3_1(Conf.filter))
+    # fv.add_feature_gen(FSuffix3_2(Conf.filter))
+    fv.add_feature_gen(F7Direction(Conf.filter))
+    fv.add_feature_gen(F8Direction(Conf.filter))
+    fv.add_feature_gen(F9Direction(Conf.filter))
+    fv.add_feature_gen(F10Direction(Conf.filter))
+    fv.add_feature_gen(F11Direction(Conf.filter))
+    fv.add_feature_gen(F12Direction(Conf.filter))
+    fv.add_feature_gen(F13Direction(Conf.filter))
+    # fv.add_feature_gen(FInBetweenAll2(Conf.filter))
+    # fv.add_feature_gen(FInBetweenAll3(Conf.filter))
+    # fv.add_feature_gen(FInBetweenAll4(Conf.filter))
+    # fv.add_feature_gen(FInBetweenAll5(Conf.filter))
+    # fv.add_feature_gen(FInBetweenAll6(Conf.filter))
+    # fv.add_feature_gen(FInBetweenAll7(Conf.filter))
+    # fv.add_feature_gen(FInBetweenAll8(Conf.filter))

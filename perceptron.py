@@ -13,6 +13,9 @@ class Perceptron(object):
 
     def train(self, corpus: Corpus, fv: FeatureVec, niter: int):
         weights = np.zeros(fv.get_size())
+        if Conf.initial_train_weights is not None:
+            print('loading weights from: ' + Conf.initial_train_weights)
+            weights = np.asarray(list(map(float, [line.strip() for line in open(Conf.initial_train_weights)])))
         for i in range(1, niter+1):
             mistakes = 0.
             print('perceptron iteration ', i, time.asctime())

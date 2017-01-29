@@ -1,3 +1,4 @@
+import os
 import time
 from basic_features.feature import *
 from basic_features.unigrams import *
@@ -15,12 +16,57 @@ def train(fv: FeatureVec, trainer: pr.Perceptron, train_corpus: Corpus, out_file
     return weights
 
 
+def test_from_train(dp: DataParser, fv: FeatureVec, trainer: pr.Perceptron, weights, out_file):
+    if Conf.test_file_name is None: return
+    test_corpus = dp.parse(Conf.test_file_name, Conf.test_max_samples)
+
+    out_file.write('start testing weights from train at ' + time.asctime())
+    accuracy = trainer.test(test_corpus, fv, weights)
+    out_file.write(', finish testing at ' + time.asctime() + ', ')
+    out_file.write('accuracy=' + str(accuracy) + "\n")
+
+
+def test_from_path(dp: DataParser, fv: FeatureVec, trainer: pr.Perceptron, out_file):
+    if Conf.test_file_name is None: return
+    test_corpus = dp.parse(Conf.test_file_name, Conf.test_max_samples)
+    if os.path.isdir(Conf.weights_src):
+        files = os.listdir(Conf.weights_src)
+        wlist = []
+        iter = 1
+        while True:
+            curr = [ f for f in files if 'weights_' + str(iter) + '_' in f]
+            if len(curr) == 0: break
+            print('test iteration ' + str(iter))
+            src = curr[0]
+            weights = np.asarray(list(map(float, [line.strip() for line in open(Conf.weights_src + src)])))
+            out_file.write('start testing weights from ' + src + ' at ' + time.asctime())
+            accuracy = trainer.test(test_corpus, fv, weights)
+            out_file.write(', finish testing at ' + time.asctime() + ', ')
+            out_file.write('accuracy=' + str(accuracy) + "\n")
+            wlist.append(str(iter) + ', ' + str(accuracy))
+            iter += 1
+        print(wlist)
+        out_acc_file = open(Conf.weights_src + Conf.test_name + '_accuracy_data.txt', 'w')
+        for l in wlist:
+            out_acc_file.write(l)
+        out_acc_file.close()
+
+            # weights = np.asarray(list(map(float, [line.strip() for line in open(Conf.weights_src)])))
+            # out_file.write('start testing weights from ' + Conf.weights_src+ ' at ' + time.asctime())
+            # accuracy = trainer.test(test_corpus, fv, weights)
+            # out_file.write(', finish testing at ' + time.asctime() + ', ')
+            # out_file.write('accuracy=' + str(accuracy) + "\n")
+    else:
+        weights = np.asarray(list(map(float, [line.strip() for line in open(Conf.weights_src)])))
+        out_file.write('start testing weights from ' + Conf.weights_src + ' at ' + time.asctime())
+        accuracy = trainer.test(test_corpus, fv, weights)
+        out_file.write(', finish testing at ' + time.asctime() + ', ')
+        out_file.write('accuracy=' + str(accuracy) + "\n")
+
+
 
 def main():
-
     out_file = open(Conf.output_file_name, 'w')
-    out_weight_file = open(Conf.output_weight_file_name, 'w')
-
     dp = DataParser()
     train_corpus = dp.parse(Conf.train_file_name, Conf.train_max_samples)
 
@@ -36,29 +82,26 @@ def main():
 
     trainer = pr.Perceptron()
 
-    weights = None
+    # weights = None
     if Conf.weights_src is None:
         weights = train(fv, trainer, train_corpus, out_file)
+        out_weight_file = open(Conf.output_weight_file_name, 'w')
+        for i in weights:
+            out_weight_file.write("%s\n" % i)
+            out_weight_file.close()
+        test_from_train(dp, fv, trainer, weights, out_file)
     else:
-        weights = np.asarray(list(map(float, [line.strip() for line in open(Conf.weights_src)])))
-    for i in weights:
-        out_weight_file.write("%s\n" % i)
-        # out_weight_file.writelines(weights.tostring())
+        # weights = np.asarray(list(map(float, [line.strip() for line in open(Conf.weights_src)])))
+        test_from_path(dp, fv, trainer, out_file)
 
-    if Conf.test_file_name is not None:
-        test_corpus = dp.parse(Conf.test_file_name, Conf.test_max_samples)
-        out_file.write('start testing at ' + time.asctime())
-        accuracy = trainer.test(test_corpus, fv, weights)
-        out_file.write('finish testing at ' + time.asctime())
-        out_file.write('accuracy=' + str(accuracy) + "\n")
-
-
-
-
-
+    # if Conf.test_file_name is not None:
+    #     test_corpus = dp.parse(Conf.test_file_name, Conf.test_max_samples)
+    #     out_file.write('start testing at ' + time.asctime())
+    #     accuracy = trainer.test(test_corpus, fv, weights)
+    #     out_file.write('finish testing at ' + time.asctime())
+    #     out_file.write('accuracy=' + str(accuracy) + "\n")
 
     out_file.close()
-    out_weight_file.close()
 
 
 if __name__ == '__main__':

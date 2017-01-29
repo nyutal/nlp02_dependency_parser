@@ -1,6 +1,7 @@
 from sentence import *
 from corpus import *
 import numpy as np
+from conf import Conf
 
 
 class FeatureGenerator(object):
@@ -98,7 +99,6 @@ class FeatureVec(object):
             for m in g[h].keys():
                 res += self.get_features_for_edge(sentence, h, m)
         return res
-
 
     def generate_features(self, corpus=None):
         if corpus is not None:
