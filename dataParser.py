@@ -53,7 +53,7 @@ class DataParser(object):
                     sentence = Sentence(sid)
                     continue
                 tabs = line.split('\t')
-                sentence.append(Word(int(tabs[0]), tabs[1], tabs[3], 0))
+                sentence.append(Word(int(tabs[0]), tabs[1], tabs[3], -1))
         corpus = Corpus(sentences, in_file)
         return corpus
 
