@@ -33,10 +33,10 @@ def test_from_path(dp: DataParser, fv: FeatureVec, trainer: pr.Perceptron, out_f
         files = os.listdir(Conf.weights_src)
         wlist = []
         iter = 1
+        print('start multiple iteration tests:' + Conf.test_name + ' at ' + time.asctime())
         while True:
             curr = [ f for f in files if 'weights_' + str(iter) + '_' in f]
             if len(curr) == 0: break
-            print('test iteration ' + str(iter))
             src = curr[0]
             weights = np.asarray(list(map(float, [line.strip() for line in open(Conf.weights_src + src)])))
             out_file.write('start testing weights from ' + src + ' at ' + time.asctime())
@@ -44,6 +44,7 @@ def test_from_path(dp: DataParser, fv: FeatureVec, trainer: pr.Perceptron, out_f
             out_file.write(', finish testing at ' + time.asctime() + ', ')
             out_file.write('accuracy=' + str(accuracy) + "\n")
             wlist.append(str(iter) + ', ' + str(accuracy))
+            print('test iteration ' + str(iter) + ', accuracy=' + str(accuracy) + ' time: ' + time.asctime())
             iter += 1
         print(wlist)
         out_acc_file = open(Conf.weights_src + Conf.test_name + '_accuracy_data.txt', 'w')
