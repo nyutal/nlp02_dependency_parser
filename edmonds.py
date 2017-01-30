@@ -30,49 +30,47 @@ def _getCycle(n, g, visited=set(), cycle=[]):
 
 
 def _mergeCycles(cycle, G, RG, g, rg):
-    try:
-        allInEdges = []
-        minInternal = None
-        minInternalWeight = float("inf")
+    allInEdges = []
+    minInternal = None
+    minInternalWeight = float("inf")
 
-        # find minimal internal edge weight
-        for n in cycle:
-            for e in RG[n]:
-                if e in cycle:
-                    if minInternal is None or RG[n][e] < minInternalWeight:
-                        minInternal = (n, e)
-                        minInternalWeight = RG[n][e]
-                        continue
-                else:
-                    allInEdges.append((n, e))
+    # find minimal internal edge weight
+    for n in cycle:
+        for e in RG[n]:
+            if e in cycle:
+                if minInternal is None or RG[n][e] < minInternalWeight:
+                    minInternal = (n, e)
+                    minInternalWeight = RG[n][e]
+                    continue
+            else:
+                allInEdges.append((n, e))
 
-                    # find the incoming edge with minimum modified cost
-        minExternal = None
-        minModifiedWeight = 0
-        for s, t in allInEdges:
-            u, v = rg[s].popitem()
-            rg[s][u] = v
-            w = RG[s][t] - (v - minInternalWeight)
-            if minExternal is None or minModifiedWeight > w:
-                minExternal = (s, t)
-                minModifiedWeight = w
+                # find the incoming edge with minimum modified cost
+    minExternal = None
+    minModifiedWeight = 0
+    for s, t in allInEdges:
+        if len(rg[s]) == 0: continue
+        u, v = rg[s].popitem()
+        rg[s][u] = v
+        w = RG[s][t] - (v - minInternalWeight)
+        if minExternal is None or minModifiedWeight > w:
+            minExternal = (s, t)
+            minModifiedWeight = w
 
-        u, w = rg[minExternal[0]].popitem()
-        rem = (minExternal[0], u)
-        rg[minExternal[0]].clear()
-        if minExternal[1] in rg:
-            rg[minExternal[1]][minExternal[0]] = w
-        else:
-            rg[minExternal[1]] = {minExternal[0]: w}
-        if rem[1] in g:
-            if rem[0] in g[rem[1]]:
-                del g[rem[1]][rem[0]]
-        if minExternal[1] in g:
-            g[minExternal[1]][minExternal[0]] = w
-        else:
-            g[minExternal[1]] = {minExternal[0]: w}
-    except:
-        pass
+    u, w = rg[minExternal[0]].popitem()
+    rem = (minExternal[0], u)
+    rg[minExternal[0]].clear()
+    if minExternal[1] in rg:
+        rg[minExternal[1]][minExternal[0]] = w
+    else:
+        rg[minExternal[1]] = {minExternal[0]: w}
+    if rem[1] in g:
+        if rem[0] in g[rem[1]]:
+            del g[rem[1]][rem[0]]
+    if minExternal[1] in g:
+        g[minExternal[1]][minExternal[0]] = w
+    else:
+        g[minExternal[1]] = {minExternal[0]: w}
 
 
 # --------------------------------------------------------------------------------- #

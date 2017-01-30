@@ -1,29 +1,30 @@
 import time
 
 class Conf(object):
-    test_name='full_complex_filter_3'
+    test_name='full_complex_4'
     train_file_name = 'HW2-files/train.labeled'
-    train_max_samples = 2000 # 0 = all samples
+    train_max_samples = 0 # less than 1 to represent full samples
     train_niter = 100
 
-    test_file_name = None #'HW2-files/train.labeled'
-    test_max_samples = 0 # 0 = all samples
-    weights_src = None #'/Users/nyutal/dev/nlp02_dependency_parser/results/complex_first/output_basic_train_filtered_20170124_183425_weights_60_iterations.txt'
+    test_file_name = 'HW2-files/test.labeled'
+    test_max_samples = 0 # less than 1 to represent full samples
+    weights_src = 'm2.weights'
+    initial_train_weights = None #'/Users/nyutal/dev/nlp02_dependency_parser/results/complex_3_filter_2/output_full_complex_3_20170127_213955_weights_53_iterations.txt'
 
-    weights_src_comp = 'results/complex_first/output_basic_train_filtered_20170124_183425_weights_60_iterations.txt'
+    weights_src_comp = 'm2.weights'
     comp_file_name = 'HW2-files/comp.unlabeled'
-    comp_max_samples = 5 # 0 = all samples
-    comp_output_file_name = 'results/comp_out' + test_name + '_' + time.strftime("%Y%m%d_%H%M%S") + '.txt'
+    comp_max_samples = 0  # 0 = all samples
+    comp_output_file_name = 'temp_comp_m2_066031121.wtag'
 
-    output_file_name = 'results/output_' + test_name + '_' + time.strftime("%Y%m%d_%H%M%S") + '.txt'
+    output_file_name = 'output_' + test_name + '_' + time.strftime("%Y%m%d_%H%M%S") + '.txt'
     output_weight_file_name = output_file_name[:-4] + '_weights.txt'
 
     weak_root = True
     is_complex = True
+    is_competition = True
 
-    filter = 3
+    filter = 0
     print_on_each_niter = 1
-    num_of_proc = 5
 
     def get_conf_str(self):
         d = {}
